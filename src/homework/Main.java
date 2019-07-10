@@ -26,13 +26,25 @@ public class Main {
         initWordList(listWords);
         countSortPrintListWord(listWords);
         printWordWithMaxCount(listWords);
-
-
     }
 
-
     /**
-     * метод считает сколько одинаковых слов, удаляет дубликаты, и сортирует по алфавиту
+     * Метод, читает слова из файла,записывает и заполняет ArrayList нашим классом с данными
+     * @param listWords
+     */
+    private static void initWordList(ArrayList<WordCount> listWords) {
+        try (Scanner scanner = new Scanner(new File("test.txt"))) {
+            while (scanner.hasNext()) {
+                String word = scanner.useDelimiter("\\s+").next();
+                listWords.add(new WordCount(word,1));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+     /**
+     * метод считает сколько одинаковых слов, удаляет дубликаты, и сортирует по алфавиту, а так же выводит на экран
      * @param listWords
      */
     private static void countSortPrintListWord(ArrayList<WordCount> listWords) {
@@ -50,21 +62,6 @@ public class Main {
         Collections.sort(listWords, (o1, o2) -> o1.getString().compareTo(o2.getString()));
         for (WordCount listWord : listWords) {
             System.out.print(listWord.toString());
-        }
-    }
-
-    /**
-     * Метод, читает файл и заполняет ArrayList нашим классом
-     * @param listWords
-     */
-    private static void initWordList(ArrayList<WordCount> listWords) {
-        try (Scanner scanner = new Scanner(new File("test.txt"))) {
-            while (scanner.hasNext()) {
-                String word = scanner.useDelimiter("\\s+").next();
-                listWords.add(new WordCount(word,1));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
