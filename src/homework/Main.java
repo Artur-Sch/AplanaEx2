@@ -25,9 +25,16 @@ public class Main {
         ArrayList<WordCount> listWords = new ArrayList<>();
         initWordList(listWords);
         countSortPrintListWord(listWords);
+        printWordWithMaxCount(listWords);
+
 
     }
 
+
+    /**
+     * метод считает сколько одинаковых слов, удаляет дубликаты, и сортирует по алфавиту
+     * @param listWords
+     */
     private static void countSortPrintListWord(ArrayList<WordCount> listWords) {
         for (int i = 0; i < listWords.size()-1; i++) {
             int count = listWords.get(i).getInteger();
@@ -46,6 +53,10 @@ public class Main {
         }
     }
 
+    /**
+     * Метод, читает файл и заполняет ArrayList нашим классом
+     * @param listWords
+     */
     private static void initWordList(ArrayList<WordCount> listWords) {
         try (Scanner scanner = new Scanner(new File("test.txt"))) {
             while (scanner.hasNext()) {
@@ -57,6 +68,26 @@ public class Main {
         }
     }
 
+    /**
+     * Поиск и вывод на экран, слова с максимальным колличеством повторений
+     * @param listWords
+     */
+    private static void printWordWithMaxCount(ArrayList<WordCount> listWords) {
+        int maxCount = 0;
+        String word = null;
+        for (WordCount listWord : listWords) {
+            if (listWord.getInteger() > maxCount) {
+                maxCount = listWord.getInteger();
+                word = listWord.getString();
+            }
+        }
+        System.out.println(word + " - " + maxCount);
+    }
+
+    /**
+     * Метод читает слова из файла, считает количество повторений, записывает их в TreeMap и выводит на экран
+     * @return
+     */
     private static TreeMap<String, Integer> readTxtFileAndWordsCount() {
         TreeMap<String, Integer> wordsCount = new TreeMap<>();
         try (Scanner scanner = new Scanner(new File("test.txt"))) {
@@ -75,6 +106,11 @@ public class Main {
         return wordsCount;
     }
 
+
+    /**
+     * Вывод слова с максимальным колличеством повторений из TreeMap/
+     * @param wordsCount
+     */
     private static void printWordWithMaxCount(TreeMap<String, Integer> wordsCount) {
         int maxValue = 0;
         String result = null;
